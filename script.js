@@ -12,7 +12,7 @@
 
 const PLAYFIELD_COLUMNS = 10;
 const PLAYFIELD_ROWS = 20;
-const TETROMINO_NAMES = ['O', 'J', 'L', 'S', 'Z', 'T', 'I',];
+const TETROMINO_NAMES = ['O', 'J', 'L', 'S', 'Z', 'T', 'I'];
 
 const TETROMINOES = {
     'O': [
