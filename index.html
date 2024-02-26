@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRIS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="game">
+        <div class="tetris">
+
+        </div>
+        <div class="info_panel">
+            <p>Score</p>
+            <div class="score">
+                0
+            </div>
+            <p>Lines</p>
+            <div class="lines_counter">
+                0
+            </div>
+            <p>Hiscore</p>
+            <div class="hiscore">
+                0
+            </div>
+            <button class="reset_hiscore_btn">Reset</button>
+            <p>Level</p>
+            <div class="level">
+                0
+            </div>
+            <div class="lines_destroyed">               
+            </div>
+            <div class="next_tetromino" id="nextTetrominoContainer">
+                
+            </div>
+        </div>
+    </div>
+    <div class="arrows">
+        <img class="arrow_left" src="./img/arrow_left.svg" />
+        <img class="arrow_rotate" src="./img/arrow_rotate.svg" />
+        <img class="arrow_right" src="./img/arrow_right.svg" />
+        <img class="arrow_drop" src="./img/arrow_drop.svg" />
+        <img class="arrow_down" src="./img/arrow_down.svg" />
+    </div>
+
+    <div class="game-over">
+        <button class="restart">GAME OVER</button>
+    </div>
+
+    <script type="module" src="main.js"></script>
+    <!-- <script type="module" src="main1.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(90deg, rgb(31, 31, 193), rgb(41, 188, 36));
+    height: 100vh;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', system-ui;
+    font-size: clamp(8px, 1vw, 12px);
+}
+
+p {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 5px;
+    color: rgb(0, 0, 0);
+}
+
+.game {
+    display: flex;
+}
+
+.tetris {
+    background-color: #00d8fb;
+    padding: 0.5vh;
+    border-radius: 0.5vh;
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(20, auto);
+}
+
+.tetris div {
+    height: min(4vh, 7vw);
+    width: min(4vh, 7vw);
+    background-color: rgba(97, 75, 75, 0.205);
+    border-radius: 0.3vh;
+    box-shadow:
+        inset 2px 2px 2px rgba(128, 128, 128, 0.271),
+        inset -2px -2px 2px rgba(22, 87, 217, 0.271);
+}
+
+.ghost div {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.tetris .O {
+    background: rgb(188, 201, 10);
+}
+
+.tetris .L {
+    background: rgb(6, 150, 9);
+}
+
+.tetris .J {
+    background: rgb(213, 179, 42);
+}
+
+.tetris .S {
+    background: rgb(87, 4, 158);
+}
+
+.tetris .Z {
+    background: rgb(210, 231, 15);
+}
+
+.tetris .T {
+    background: rgb(150, 6, 6);
+}
+
+.tetris .I {
+    background: rgb(223, 108, 0);
+}
+
+.tetris .ghost {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 2px 2px 2px rgba(128, 128, 128, 0.271),
+        inset -2px -2px 2px rgba(22, 87, 217, 0.271);
+}
+
+.info_panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #00d8fb;
+    padding: 1.5vh;
+    padding-top: 50px;
+    border-radius: 0.5vh;
+    width: max(15vw);
+}
+
+.score {
+    background-color: #1ecf1e;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.lines_counter {
+    background-color: #1ecf1e;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.hiscore {
+    background-color: #1ecf1e;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.reset_hiscore_btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0.5vh;
+    width: clamp(50px, 10vw, 350px);
+    align-self: center;
+    background-color: #be3f3f;
+    /* color: aqua; */
+    font-family: 'Press Start 2P', system-ui;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.level {
+    background-color: #1ecf1e;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.lines_destroyed {
+    font-size: 1.2em;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.game-over {
+    position: fixed;
+    background-color: rgba(204, 41, 41, 0.5);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.restart {
+    padding: 30px;
+    bottom: none;
+    border-radius: 20px;
+    background-color: #67be3f;
+    color: aqua;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.arrows {
+    display: grid;
+    grid-template-columns: repeat(3 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: clamp(2vw, 2.2vw, 2.5vw);
+    border-radius: 1vh;
+    background-color: #00d8fb;
+    padding: 10px;
+}
+
+.arrow_left {
+    border-radius: 50%;
+    background-color: #16bbd8;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.arrow_rotate {
+    border-radius: 50%;
+    background-color: #16bbd8;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.arrow_right {
+    border-radius: 50%;
+    background-color: #16bbd8;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.arrow_drop {
+    border-radius: 50%;
+    background-color: #16bbd8;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.arrow_down {
+    border-radius: 50%;
+    background-color: #16bbd8;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.arrow_left:hover {
+    transform: translate(1px, 1px);
+    background-color: none;
+    box-shadow: none;
+    transition: 200ms;
+}
+
+.arrow_rotate:hover {
+    transform: translate(1px, 1px);
+    background-color: none;
+    box-shadow: none;
+    transition: 200ms;
+}
+
+.arrow_right:hover {
+    transform: translate(1px, 1px);
+    background-color: none;
+    box-shadow: none;
+    transition: 200ms;
+}
+
+.arrow_drop:hover {
+    transform: translate(1px, 1px);
+    background-color: none;
+    box-shadow: none;
+    transition: 200ms;
+}
+
+.arrow_down:hover {
+    transform: translate(1px, 1px);
+    background-color: none;
+    box-shadow: none;
+    transition: 200ms;
+}
+
+.next_tetromino {
+    background-color: #00d8fb;
+    padding: 0.5vh;
+    border-radius: 0.5vh;
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(20, auto);
+}
+
+.next_tetromino div {
+    height: min(4vh, 7vw);
+    width: min(4vh, 7vw);
+    background-color: rgba(97, 75, 75, 0.205);
+    border-radius: 0.3vh;
+    box-shadow:
+        inset 2px 2px 2px rgba(128, 128, 128, 0.271),
+        inset -2px -2px 2px rgba(22, 87, 217, 0.271);
+}
