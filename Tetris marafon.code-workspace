@@ -1,14 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../Tetris marafon February 2024"
-		}
-	],
-	"settings": {
-		"liveServer.settings.port": 5501,
-		"liveServer.settings.multiRootWorkspaceName": "Tetris marafon January 2024"
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }
