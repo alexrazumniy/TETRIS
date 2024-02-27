@@ -1,7 +1,6 @@
 export const PLAYFIELD_COLUMNS = 10;
 export const PLAYFIELD_ROWS = 20;
 export const TETROMINO_NAMES = ['O', 'L', 'J', 'S', 'Z', 'T', 'I'];
-
 export const TETROMINOES = {
     O: [
         [1, 1],
@@ -40,11 +39,12 @@ export const TETROMINOES = {
     ]
 };
 
-export const gameOverBlock = document.querySelector('.game-over');
-export const btnRestart    = document.querySelector('.restart_btn');
 export const arrowLeft     = document.querySelector('.arrow_left');
 export const arrowRotate   = document.querySelector('.arrow_rotate');
 export const arrowRight    = document.querySelector('.arrow_right');
 export const arrowDrop     = document.querySelector('.arrow_drop');
 export const arrowDown     = document.querySelector('.arrow_down');
-
+export const gameOverBlock = document.querySelector('.game_over');
+export const resultMessage = document.querySelector('.result_message');
+export const btnRestart    = document.querySelector('.restart_btn');
+export const btnResetHiscore = document.querySelector('reset_hiscore_btn');

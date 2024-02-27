@@ -13,10 +13,16 @@
 </head>
 
 <body>
-    <div class="game">
+    <div class="container">
         <div class="tetris">
+            <div class="game_over">
+                GAME OVER
+                <div class="result_message">
+                </div>
+            </div>
         </div>
         <div class="info_panel">
+            <button class="restart_btn"></button>
             <p>Score</p>
             <div class="score_counter">
                 0
@@ -30,27 +36,24 @@
                 0
             </div>
             <p>Hiscore</p>
-            <div class="hiscore_counter">
+            <div class="hiscore">
                 0
             </div>
             <button class="reset_hiscore_btn">Reset hiscore</button>
-            <div class="lines_destroyed">
-            </div>
             <div class="next_tetromino_field" id="nextTetrominoContainer">
                 <p>Next</p>
                 <div class="next_tetromino">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
-            <div class="game-over">
-                <button class="restart_btn">RESTART</button>
+            <div class="current_message">
             </div>
         </div>
     </div>

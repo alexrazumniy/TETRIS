@@ -5,6 +5,7 @@ import {
     TETROMINOES,
     gameOverBlock,
     btnRestart,
+    btnResetHiscore,
     arrowLeft,
     arrowRotate,
     arrowRight,
@@ -24,16 +25,19 @@ let playfield,
     timeoutId,
     requestId,
     score,
+    hiscore,
     lines,
     speed,
+    level,
     message,
     isPaused = false,
     isGameOver = false
+    // resultMessage
 
 init();
 
 function init() {
-    // gameOverBlock.style.display = 'none';
+    gameOverBlock.style.display = 'none';
     isGameOver = false;
     generatePlayField();
     generateTetromino();
@@ -41,7 +45,11 @@ function init() {
     cells = document.querySelectorAll('.tetris div');
     score = 0;
     lines = 0;
+    level = 0;
     countScore(null);
+
+    hiscore = parseInt(localStorage.getItem('hiscore') || 0);
+    document.querySelector('.hiscore').innerHTML =  hiscore;
 }
 
 function convertPositionToIndex(row, column) {
@@ -176,7 +184,9 @@ function moveDown() {
     startLoop();
     if (isGameOver) {
         gameOver();
-        document.querySelector('.restart_btn').innerHTML = 'GAME OVER';
+    //     document.querySelector('.restart_btn').innerHTML = 'GAME OVER';
+    // } else {
+    //     document.querySelector('.restart_btn').innerHTML = 'RESTART';
     }
 }
 
@@ -186,19 +196,22 @@ function countScore(destroyRows) {
     switch (destroyRows) {
         case 1:
             score += 10;
-            message = `${destroyRows} line destroyed`;
+            message = `${destroyRows} line destroyed
+            <br> You may better`;
             break;
         case 2:
             score += 30;
-            message = `${destroyRows} lines destroyed`;
+            message = `${destroyRows} lines destroyed
+            <br> Not bad`;
             break;
         case 3:
             score += 50;
-            message = `${destroyRows} lines destroyed`;
+            message = `${destroyRows} lines destroyed
+            <br> Excellent`;
             break;
         case 4:
             score += 100;
-            message = `TETRIS!`;
+            message = `WOW! it's TETRIS!`;
             break;
         default:
             score += 0;
@@ -206,7 +219,7 @@ function countScore(destroyRows) {
     }
     document.querySelector('.score_counter').innerHTML = score;
     document.querySelector('.lines_counter').innerHTML = lines;
-    document.querySelector('.lines_destroyed').innerHTML = message;
+    document.querySelector('.current_message').innerHTML = message;
 }
 
 function startLoop() {
@@ -216,18 +229,23 @@ function startLoop() {
     }, speed);
 }
 
-// Increase speed
+// Increase speed and level counter
 
 function speedUp() {
     if (lines > 2 && lines < 4) {
         speed = 600;
+        level = 1;
     } else if (lines > 4 && lines < 6) {
         speed = 500;
+        level = 2;
     } else if (lines >= 6) {
         speed = 400;
+        level = 3;
     } else {
         speed = 700;
+        // level = 1;
     }
+    document.querySelector('.level_counter').innerHTML = level;
 }
 
 function stopLoop() {
@@ -237,10 +255,33 @@ function stopLoop() {
 
 function gameOver() {
     stopLoop();
-    gameOverBlock.style.display = 'flex';
     gameOverAudio.play();
-    document.querySelector('.lines_destroyed').innerHTML = `You've destroyed ${lines} lines, total score is ${score} points`;
+
+    hiscore = Math.max(hiscore, score); // Recording hiscore to localStorage
+    localStorage.setItem('hiscore', hiscore);
+    document.querySelector('.hiscore').innerHTML =  hiscore;
+
+    gameOverBlock.style.display = 'block';
+
+    document.querySelector('.result_message').innerHTML = `You've destroyed <br> ${lines} lines <br> Total score is <br> ${score} points`;
+
+    console.log(hiscore);
 }
+
+// Hiscore resetting
+
+document.addEventListener('DOMContentLoaded', function () {
+    const btnResetHiscore = document.querySelector('.reset_hiscore_btn');
+
+    btnResetHiscore.addEventListener('click', function () {
+        resetHiscore();
+    });
+
+    function resetHiscore() {
+        localStorage.removeItem('hiscore');
+        document.querySelector('.hiscore').innerHTML = 0;
+    }
+});
 
 // Keydown events
 
