@@ -1,19 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TETRIS</title>
+    <link rel="icon" href="./img/document.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <div class="tetris">
-        <!-- <div></div>
-        <div></div>
-        <div></div> -->
+    <div class="game">
+        <div class="tetris">
+        </div>
+        <div class="info_panel">
+            <p>Score</p>
+            <div class="score_counter">
+                0
+            </div>
+            <p>Lines</p>
+            <div class="lines_counter">
+                0
+            </div>
+            <p>Level</p>
+            <div class="level_counter">
+                0
+            </div>
+            <p>Hiscore</p>
+            <div class="hiscore_counter">
+                0
+            </div>
+            <button class="reset_hiscore_btn">Reset hiscore</button>
+            <div class="lines_destroyed">
+            </div>
+            <div class="next_tetromino_field" id="nextTetrominoContainer">
+                <p>Next</p>
+                <div class="next_tetromino">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                </div>
+            </div>
+            <div class="game-over">
+                <button class="restart_btn">RESTART</button>
+            </div>
+        </div>
+    </div>
+    <div class="arrows">
+        <img class="arrow_left" src="./img/arrow_left.svg" />
+        <img class="arrow_rotate" src="./img/arrow_rotate.svg" />
+        <img class="arrow_right" src="./img/arrow_right.svg" />
+        <img class="arrow_drop" src="./img/arrow_drop.svg" />
+        <img class="arrow_down" src="./img/arrow_down.svg" />
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>

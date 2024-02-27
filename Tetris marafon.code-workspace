@@ -2,6 +2,15 @@
     "folders": [
         {
             "path": "."
+        },
+        {
+            "path": "../Tetris marafon February 2024"
+        },
+        {
+            "path": "../Tetris marafon January 2024"
         }
-    ]
+    ],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "TETRIS"
+    }
 }
