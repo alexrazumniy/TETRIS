@@ -15,6 +15,8 @@ import {
 const deleteRowAudio = new Audio('./sounds/deleterow1.mp3');
 const dropAudio = new Audio('./sounds/drop.mp3');
 const moveAudio = new Audio('./sounds/move2.mp3');
+const pauseAudio = new Audio('./sounds/pause.mp3');
+const gameOverAudio = new Audio('./sounds/gameover.mp3');
 
 let playfield,
     tetromino,
@@ -236,6 +238,7 @@ function stopLoop() {
 function gameOver() {
     stopLoop();
     gameOverBlock.style.display = 'flex';
+    gameOverAudio.play();
     document.querySelector('.lines_destroyed').innerHTML = `You've destroyed ${lines} lines, total score is ${score} points`;
 }
 
@@ -249,6 +252,7 @@ btnRestart.addEventListener('click', function () {
 function togglePauseGame() {
     isPaused = !isPaused;
     isPaused ? stopLoop() : startLoop();
+    pauseAudio.play();
     isPaused ? document.querySelector('.score_counter').innerHTML = 'PAUSE' :
         document.querySelector('.score_counter').innerHTML = score;
 }
