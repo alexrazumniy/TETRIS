@@ -18,6 +18,7 @@ const dropAudio = new Audio('./sounds/drop.mp3');
 const moveAudio = new Audio('./sounds/move2.mp3');
 const pauseAudio = new Audio('./sounds/pause.mp3');
 const gameOverAudio = new Audio('./sounds/gameover.mp3');
+const gameMusic = document.getElementById('game_music');
 
 let playfield,
     tetromino,
@@ -42,10 +43,14 @@ function init() {
     generatePlayField();
     generateTetromino();
     startLoop();
+
+    gameMusic.play();
+    
     cells = document.querySelectorAll('.tetris div');
     score = 0;
     lines = 0;
     level = 0;
+    // timeoutId = null;
     countScore(null);
 
     hiscore = parseInt(localStorage.getItem('hiscore') || 0);
@@ -143,6 +148,22 @@ function placeTetromino() {
     generateTetromino();
 }
 
+function findFilledRows() {
+    const filledRows = [];
+    for (let row = 0; row < PLAYFIELD_ROWS; row++) {
+        let filledColumns = 0;
+        for (let column = 0; column < PLAYFIELD_COLUMNS; column++) {
+            if (playfield[row][column] != 0) {
+                filledColumns++;
+            }
+        }
+        if (PLAYFIELD_COLUMNS == filledColumns) {
+            filledRows.push(row);
+        }
+    }
+    return filledRows;
+}
+
 function removeFilledRows(filledRows) {
     for (let i = 0; i < filledRows.length; i++) {
         const row = filledRows[i];
@@ -159,22 +180,6 @@ function dropRowsAbove(rowToDelete) {
     }
 
     playfield[0] = new Array(PLAYFIELD_COLUMNS).fill(0);
-}
-
-function findFilledRows() {
-    const filledRows = [];
-    for (let row = 0; row < PLAYFIELD_ROWS; row++) {
-        let filledColumns = 0;
-        for (let column = 0; column < PLAYFIELD_COLUMNS; column++) {
-            if (playfield[row][column] != 0) {
-                filledColumns++;
-            }
-        }
-        if (PLAYFIELD_COLUMNS == filledColumns) {
-            filledRows.push(row);
-        }
-    }
-    return filledRows;
 }
 
 function moveDown() {
@@ -197,7 +202,7 @@ function countScore(destroyRows) {
         case 1:
             score += 10;
             message = `${destroyRows} line destroyed
-            <br> You may better`;
+            <br> You can do better`;
             break;
         case 2:
             score += 30;
