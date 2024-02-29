@@ -524,13 +524,12 @@ function hasCollisions(row, column) {
 btnToggleMusic.addEventListener('click', toggleMusic);
 const musicIcon = document.getElementById('music_icon');
 
-
 function toggleMusic() {
     gameMusic.paused ? (gameMusic.play(), musicIcon.setAttribute('src', './img/music-mute-sound-volume-speaker_red.svg')) : (gameMusic.pause(), musicIcon.setAttribute('src', './img/music-unmute-sound-volume-speaker_green.svg'));
 }
 
-
-
+btnToggleMusic.addEventListener('click', toggleMusic);
+const soundIcon = document.getElementById('music_icon');
 
 btnToggleSound.addEventListener('click', function () {
     soundIsMuted ? unmuteAllSounds() : muteAllSounds();
