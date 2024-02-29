@@ -6,11 +6,14 @@ import {
     gameOverBlock,
     btnRestart,
     btnResetHiscore,
+    btnToggleMusic,
+    btnToggleSound,
     arrowLeft,
     arrowRotate,
     arrowRight,
     arrowDrop,
     arrowDown,
+    overlay
 } from './constants.js';
 
 const deleteRowAudio = new Audio('./sounds/deleterow1.mp3');
@@ -18,11 +21,16 @@ const dropAudio = new Audio('./sounds/drop.mp3');
 const moveAudio = new Audio('./sounds/move2.mp3');
 const pauseAudio = new Audio('./sounds/pause.mp3');
 const gameOverAudio = new Audio('./sounds/gameover.mp3');
+
 const gameMusic = document.getElementById('game_music');
+
+const allSounds = [deleteRowAudio, dropAudio, moveAudio, pauseAudio, gameOverAudio];
+
 
 let playfield,
     tetromino,
     cells,
+    // timeoutId = null,
     timeoutId,
     requestId,
     score,
@@ -32,8 +40,9 @@ let playfield,
     level,
     message,
     isPaused = false,
-    isGameOver = false
-    // resultMessage
+    isGameOver = false,
+    soundIsMuted = true
+// resultMessage
 
 init();
 
@@ -44,17 +53,18 @@ function init() {
     generateTetromino();
     startLoop();
 
+    // toggleSound(); ////////
+
     gameMusic.play();
-    
+
     cells = document.querySelectorAll('.tetris div');
     score = 0;
     lines = 0;
     level = 0;
-    // timeoutId = null;
     countScore(null);
 
     hiscore = parseInt(localStorage.getItem('hiscore') || 0);
-    document.querySelector('.hiscore').innerHTML =  hiscore;
+    document.querySelector('.hiscore').innerHTML = hiscore;
 }
 
 function convertPositionToIndex(row, column) {
@@ -189,9 +199,9 @@ function moveDown() {
     startLoop();
     if (isGameOver) {
         gameOver();
-    //     document.querySelector('.restart_btn').innerHTML = 'GAME OVER';
-    // } else {
-    //     document.querySelector('.restart_btn').innerHTML = 'RESTART';
+        //     document.querySelector('.restart_btn').innerHTML = 'GAME OVER';
+        // } else {
+        //     document.querySelector('.restart_btn').innerHTML = 'RESTART';
     }
 }
 
@@ -202,7 +212,7 @@ function countScore(destroyRows) {
         case 1:
             score += 10;
             message = `${destroyRows} line destroyed
-            <br> You can do better`;
+            <br> You can do it`;
             break;
         case 2:
             score += 30;
@@ -258,13 +268,20 @@ function stopLoop() {
     timeoutId = clearTimeout(timeoutId);
 }
 
+/////////
+
+
 function gameOver() {
     stopLoop();
     gameOverAudio.play();
+    gameMusic.pause();
+    gameMusic.currentTime = 0;
+
+    overlay.style.display = 'flex';
 
     hiscore = Math.max(hiscore, score); // Recording hiscore to localStorage
     localStorage.setItem('hiscore', hiscore);
-    document.querySelector('.hiscore').innerHTML =  hiscore;
+    document.querySelector('.hiscore').innerHTML = hiscore;
 
     gameOverBlock.style.display = 'block';
 
@@ -275,18 +292,14 @@ function gameOver() {
 
 // Hiscore resetting
 
-document.addEventListener('DOMContentLoaded', function () {
-    const btnResetHiscore = document.querySelector('.reset_hiscore_btn');
-
-    btnResetHiscore.addEventListener('click', function () {
-        resetHiscore();
-    });
-
-    function resetHiscore() {
-        localStorage.removeItem('hiscore');
-        document.querySelector('.hiscore').innerHTML = 0;
-    }
+btnResetHiscore.addEventListener('click', function () {
+    resetHiscore();
 });
+
+function resetHiscore() {
+    document.querySelector('.hiscore').innerHTML = 0;
+    localStorage.removeItem('hiscore');
+}
 
 // Keydown events
 
@@ -298,7 +311,8 @@ btnRestart.addEventListener('click', function () {
 function togglePauseGame() {
     isPaused = !isPaused;
     isPaused ? stopLoop() : startLoop();
-    pauseAudio.play();
+    isPaused ? gameMusic.pause() : gameMusic.play();
+    isPaused ? pauseAudio.play() : pauseAudio.stop();
     isPaused ? document.querySelector('.score_counter').innerHTML = 'PAUSE' :
         document.querySelector('.score_counter').innerHTML = score;
 }
@@ -445,4 +459,89 @@ function isOutsideOfGameboard(row, column) {
 
 function hasCollisions(row, column) {
     return playfield[tetromino.row + row]?.[tetromino.column + column]
+}
+
+// document.querySelector('.next_tetromino_container');
+
+// function generateNextTetromino() {
+//     const nextTetrominoIndex = Math.floor(Math.random() * TETROMINOES.length);
+//     const nextTetromino = TETROMINOES[nextTetrominoIndex];
+
+//     // Отображение следующей фигуры в контейнере
+//     displayTetrominoInContainer(nextTetromino, 'nextTetrominoContainer');
+// }
+
+// // Отображение фигуры в указанном контейнере
+// function displayTetrominoInContainer(TETROMINOES, containerId) {
+//     const container = document.querySelector('.next_tetromino');
+//     // container.innerHTML = '';
+
+//     TETROMINOES.forEach(row => {
+//         row = document.createElement('div');
+//         row.classList.add('.next_tetromino');
+
+//         row.forEach(cell => {
+//             const cellDiv = document.createElement('div');
+//             cellDiv.classList.add('.next_tetromino');
+//             cellDiv.style.backgroundColor = cell ? 'blue' : 'transparent';
+//             // Настройте цвета по вашему усмотрению
+//             rowDiv.appendChild(cellDiv);
+//         });
+
+//         container.appendChild(rowDiv);
+//     });
+// }
+// console.log(TETROMINOES);
+
+// generateNextTetromino();
+
+
+
+
+
+// function toggleSound() {
+//     gameMusic.paused ? gameMusic.play() : gameMusic.pause();
+//         // soundIcon.src = './img/music-mute-sound-volume-speaker_red.svg';
+
+//         // soundIcon.src = '/img/music-unmute-sound-volume-speaker_green.svg';
+//     }
+
+// toggleButton.addEventListener('click', toggleSound);
+
+
+// function toggleMusic() {
+//     gameMusic.paused ? gameMusic.play() : gameMusic.pause();
+//     gameMusic.paused ? soundIcon.src = soundIcon.src = './img/music-mute-sound-volume-speaker_red.svg' :
+//     soundIcon.src = '/img/music-unmute-sound-volume-speaker_green.svg'
+// }
+
+// unmuteImage.src = './img/music-unmute-sound-volume-speaker_green.svg';
+
+// muteImage.src = './img/music-mute-sound-volume-speaker_red.svg';
+
+
+
+btnToggleMusic.addEventListener('click', toggleMusic);
+const musicIcon = document.getElementById('music_icon');
+
+
+function toggleMusic() {
+    gameMusic.paused ? (gameMusic.play(), musicIcon.setAttribute('src', './img/music-mute-sound-volume-speaker_red.svg')) : (gameMusic.pause(), musicIcon.setAttribute('src', './img/music-unmute-sound-volume-speaker_green.svg'));
+}
+
+
+
+
+btnToggleSound.addEventListener('click', function () {
+    soundIsMuted ? unmuteAllSounds() : muteAllSounds();
+});
+
+function muteAllSounds() {
+    allSounds.forEach(sound => sound.volume = 0);
+    console.log("ffff");
+}
+
+function unmuteAllSounds() {
+    allSounds.forEach(sound => sound.volume = originalVolumes[sound]);
+    console.log("ffff");
 }

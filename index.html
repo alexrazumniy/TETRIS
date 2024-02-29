@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="info_panel">
-            <button class="restart_btn"></button>
+            <button class="restart_btn">Restart</button>
             <p>Score</p>
             <div class="score_counter">
                 0
@@ -40,7 +40,8 @@
                 0
             </div>
             <button class="reset_hiscore_btn">Reset hiscore</button>
-            <div class="next_tetromino_field" id="nextTetrominoContainer">
+
+            <div class="next_tetromino_container" id="nextTetrominoContainer">
                 <p>Next</p>
                 <div class="next_tetromino">
                     <div></div>
@@ -53,6 +54,16 @@
                     <div></div>
                 </div>
             </div>
+
+
+            <button class="toggle_music_btn">
+                <img id="music_icon" src="./img/music-mute-sound-volume-speaker_red.svg" alt="music on/off" />
+            </button>
+
+            <button class="toggle_sounds_btn">
+                <img id="sound_icon" alt="sound on/off" />
+            </button>
+
             <div class="current_message">
             </div>
         </div>
@@ -64,7 +75,13 @@
         <img class="arrow_drop" src="./img/arrow_drop.svg" />
         <img class="arrow_down" src="./img/arrow_down.svg" />
     </div>
-    <audio id="game_music" src="./sounds/muzyka-tetris.mp3 " preload="auto"></audio>
+    <audio id="game_music" src="./sounds/elektrik_cokernut_popcorn.mp3" controls preload="auto">
+        Your browser does not support the audio tag
+    </audio>
+
+    <div class="overlay">
+        <button class="btn_restart">Restart</button>
+    </div>
 
     <script type="module" src="script.js"></script>
 </body>
