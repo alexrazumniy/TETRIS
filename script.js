@@ -136,15 +136,6 @@ function drawNextTetromino() {
     // document.querySelector('.next_tetromino');
     const nextTetromino = document.querySelector('.next_tetromino');
 
-    // const nameTetro = getRandomElement(TETROMINO_NAMES);
-    // const matrixTetro = TETROMINOES[nameTetro];
-    // nextTetromino = {
-    //     name: nameTetro,
-    //     matrix: matrixTetro,
-    //     row: 0,
-    //     column: 0,
-    // };
-
     const tetrominoMatrixSize = tetromino.length;
     for (let row = 0; row < tetrominoMatrixSize; row++) {
         for (let column = 0; column < tetrominoMatrixSize; column++) {
@@ -156,10 +147,7 @@ function drawNextTetromino() {
             console.log(nextTetromino.name);
         }
     }
-    // console.log(matrix);
 }
-
-
 
 function draw() {
     cells.forEach(cell => cell.removeAttribute("class"));
@@ -490,46 +478,6 @@ function hasCollisions(row, column) {
 // Next tetromimo
 
 document.querySelector('.next_tetromino_container');
-
-// function generateNextTetromino() {
-//     const nameTetro = getRandomElement(TETROMINO_NAMES);
-//     const matrixTetro = TETROMINOES[nameTetro];
-//     nextTetromino = {
-//         name: nameTetro,
-//         matrix: matrixTetro,
-//         row: 0,
-//         column: 0,
-//     };
-// }
-
-// function drawNextTetromino() {
-//     // const nextTetrominoContainer = document.querySelector('.next_tetromino');
-//     // if (!nextTetrominoContainer) {
-//     //     console.error("Не найден элемент с классом 'next-tetromino' в HTML.");
-//     //     return;
-//     // }
-
-//     document.querySelector('.next_tetromino').innerHTML = '';
-//     const tetrominoMatrixSize = nextTetromino.matrix.length;
-
-//     for (let row = 0; row < tetrominoMatrixSize; row++) {
-//         for (let column = 0; column < tetrominoMatrixSize; column++) {
-//             const cellDiv = document.createElement('div');
-//             // cellDiv.classList.add('next_tetromino>div');
-//             document.querySelector('.next_tetromino').appendChild(cellDiv);
-//             if (isOutsideTopBoard(row)) continue;
-//             if (nextTetromino.matrix[row][column]) {
-//                 cellDiv.classList.add(nextTetromino.name);
-//             }
-//             console.log(nextTetromino.name);
-//         }
-//     }
-// }
-
-
-// generateNextTetromino();
-// drawNextTetromino();    
-
 
 // Toggle music and sound
 
