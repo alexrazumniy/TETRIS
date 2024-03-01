@@ -39,17 +39,19 @@ export const TETROMINOES = {
     ]
 };
 
-export const arrowLeft     = document.querySelector('.arrow_left');
-export const arrowRotate   = document.querySelector('.arrow_rotate');
-export const arrowRight    = document.querySelector('.arrow_right');
-export const arrowDrop     = document.querySelector('.arrow_drop');
-export const arrowDown     = document.querySelector('.arrow_down');
-export const gameOverBlock = document.querySelector('.game_over');
+export const startScreen = document.querySelector('.start_screen');
+export const btnStartGame = document.querySelector('.btn_start');
+export const btnPlayAgain = document.querySelector('.btn_play_again');
+export const btnRestartGame = document.querySelector('.btn_restart_game');
+export const btnResetHiscore = document.querySelector('.reset_hiscore_btn');
+export const btnToggleMusic = document.querySelector('.toggle_music_btn');
+export const btnToggleSound = document.querySelector('.toggle_sound_btn');
+
+export const overlay = document.querySelector(".overlay");
 export const resultMessage = document.querySelector('.result_message');
 
-export const btnRestart      = document.querySelector('.restart_btn');
-export const btnResetHiscore = document.querySelector('.reset_hiscore_btn');
-export const btnToggleMusic  = document.querySelector('.toggle_music_btn');
-export const btnToggleSound  = document.querySelector('.toggle_sounds_btn');
-
-export const overlay       = document.querySelector(".overlay");
+export const arrowLeft = document.querySelector('.arrow_left');
+export const arrowRotate = document.querySelector('.arrow_rotate');
+export const arrowRight = document.querySelector('.arrow_right');
+export const arrowDrop = document.querySelector('.arrow_drop');
+export const arrowDown = document.querySelector('.arrow_down');

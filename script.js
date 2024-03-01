@@ -3,17 +3,19 @@ import {
     PLAYFIELD_ROWS,
     TETROMINO_NAMES,
     TETROMINOES,
-    gameOverBlock,
-    btnRestart,
+    startScreen,
+    btnStartGame,
+    btnRestartGame,
+    btnPlayAgain,
     btnResetHiscore,
     btnToggleMusic,
     btnToggleSound,
+    overlay,
     arrowLeft,
     arrowRotate,
     arrowRight,
     arrowDrop,
-    arrowDown,
-    overlay
+    arrowDown
 } from './constants.js';
 
 const deleteRowAudio = new Audio('./sounds/deleterow1.mp3');
@@ -21,16 +23,14 @@ const dropAudio = new Audio('./sounds/drop.mp3');
 const moveAudio = new Audio('./sounds/move2.mp3');
 const pauseAudio = new Audio('./sounds/pause.mp3');
 const gameOverAudio = new Audio('./sounds/gameover.mp3');
-
-const gameMusic = document.getElementById('game_music');
-
 const allSounds = [deleteRowAudio, dropAudio, moveAudio, pauseAudio, gameOverAudio];
+const gameMusic = document.getElementById('game_music');
 
 
 let playfield,
     tetromino,
+    // nextTetromino,
     cells,
-    // timeoutId = null,
     timeoutId,
     requestId,
     score,
@@ -40,21 +40,25 @@ let playfield,
     level,
     message,
     isPaused = false,
-    isGameOver = false,
-    soundIsMuted = true
-// resultMessage
+    isGameOver = false
 
-init();
+document.addEventListener('DOMContentLoaded', function () {
+    startScreen.style.display = 'flex';
+    generatePlayField();
+});
+
+btnStartGame.addEventListener('click', function () {
+    init();
+});
 
 function init() {
-    gameOverBlock.style.display = 'none';
     isGameOver = false;
     generatePlayField();
     generateTetromino();
     startLoop();
 
-    // toggleSound(); ////////
-
+    startScreen.style.display = 'none';
+    overlay.style.display = 'none';
     gameMusic.play();
 
     cells = document.querySelectorAll('.tetris div');
@@ -82,7 +86,6 @@ function generatePlayField() {
         const div = document.createElement('div');
         document.querySelector('.tetris').append(div);
     }
-
     playfield = new Array(PLAYFIELD_ROWS).fill()
         .map(() => new Array(PLAYFIELD_COLUMNS).fill(0))
 }
@@ -91,7 +94,7 @@ function generateTetromino() {
     const nameTetro = getRandomElement(TETROMINO_NAMES);
     const matrixTetro = TETROMINOES[nameTetro];
     const columnTetro = PLAYFIELD_COLUMNS / 2 - Math.floor(matrixTetro.length / 2);
-    const rowTetro = -2;
+    const rowTetro = -1;
 
     tetromino = {
         name: nameTetro,
@@ -129,6 +132,35 @@ function drawTetromino() {
     }
 }
 
+function drawNextTetromino() {
+    // document.querySelector('.next_tetromino');
+    const nextTetromino = document.querySelector('.next_tetromino');
+
+    // const nameTetro = getRandomElement(TETROMINO_NAMES);
+    // const matrixTetro = TETROMINOES[nameTetro];
+    // nextTetromino = {
+    //     name: nameTetro,
+    //     matrix: matrixTetro,
+    //     row: 0,
+    //     column: 0,
+    // };
+
+    const tetrominoMatrixSize = tetromino.length;
+    for (let row = 0; row < tetrominoMatrixSize; row++) {
+        for (let column = 0; column < tetrominoMatrixSize; column++) {
+            if (nextTetromino[row][column]) {
+                const div = document.createElement('div');
+                nextTetromino.appendChild(div);
+                div.classList.add(nextTetromino.name);
+            }
+            console.log(nextTetromino.name);
+        }
+    }
+    // console.log(matrix);
+}
+
+
+
 function draw() {
     cells.forEach(cell => cell.removeAttribute("class"));
     drawPlayField();
@@ -156,6 +188,8 @@ function placeTetromino() {
     const filledRows = findFilledRows();
     removeFilledRows(filledRows);
     generateTetromino();
+
+    drawNextTetromino()
 }
 
 function findFilledRows() {
@@ -199,9 +233,6 @@ function moveDown() {
     startLoop();
     if (isGameOver) {
         gameOver();
-        //     document.querySelector('.restart_btn').innerHTML = 'GAME OVER';
-        // } else {
-        //     document.querySelector('.restart_btn').innerHTML = 'RESTART';
     }
 }
 
@@ -268,26 +299,18 @@ function stopLoop() {
     timeoutId = clearTimeout(timeoutId);
 }
 
-/////////
-
-
 function gameOver() {
     stopLoop();
-    gameOverAudio.play();
     gameMusic.pause();
+    gameOverAudio.play();
     gameMusic.currentTime = 0;
 
     overlay.style.display = 'flex';
+    document.querySelector('.result_message').innerHTML = `You've destroyed <br> ${lines} lines <br> Total score is <br> ${score} points`;
 
     hiscore = Math.max(hiscore, score); // Recording hiscore to localStorage
     localStorage.setItem('hiscore', hiscore);
     document.querySelector('.hiscore').innerHTML = hiscore;
-
-    gameOverBlock.style.display = 'block';
-
-    document.querySelector('.result_message').innerHTML = `You've destroyed <br> ${lines} lines <br> Total score is <br> ${score} points`;
-
-    console.log(hiscore);
 }
 
 // Hiscore resetting
@@ -304,7 +327,10 @@ function resetHiscore() {
 // Keydown events
 
 document.addEventListener('keydown', onKeyDown);
-btnRestart.addEventListener('click', function () {
+btnRestartGame.addEventListener('click', function () {
+    init();
+})
+btnPlayAgain.addEventListener('click', function () {
     init();
 })
 
@@ -461,86 +487,68 @@ function hasCollisions(row, column) {
     return playfield[tetromino.row + row]?.[tetromino.column + column]
 }
 
-// document.querySelector('.next_tetromino_container');
+// Next tetromimo
+
+document.querySelector('.next_tetromino_container');
 
 // function generateNextTetromino() {
-//     const nextTetrominoIndex = Math.floor(Math.random() * TETROMINOES.length);
-//     const nextTetromino = TETROMINOES[nextTetrominoIndex];
-
-//     // Отображение следующей фигуры в контейнере
-//     displayTetrominoInContainer(nextTetromino, 'nextTetrominoContainer');
+//     const nameTetro = getRandomElement(TETROMINO_NAMES);
+//     const matrixTetro = TETROMINOES[nameTetro];
+//     nextTetromino = {
+//         name: nameTetro,
+//         matrix: matrixTetro,
+//         row: 0,
+//         column: 0,
+//     };
 // }
 
-// // Отображение фигуры в указанном контейнере
-// function displayTetrominoInContainer(TETROMINOES, containerId) {
-//     const container = document.querySelector('.next_tetromino');
-//     // container.innerHTML = '';
+// function drawNextTetromino() {
+//     // const nextTetrominoContainer = document.querySelector('.next_tetromino');
+//     // if (!nextTetrominoContainer) {
+//     //     console.error("Не найден элемент с классом 'next-tetromino' в HTML.");
+//     //     return;
+//     // }
 
-//     TETROMINOES.forEach(row => {
-//         row = document.createElement('div');
-//         row.classList.add('.next_tetromino');
+//     document.querySelector('.next_tetromino').innerHTML = '';
+//     const tetrominoMatrixSize = nextTetromino.matrix.length;
 
-//         row.forEach(cell => {
+//     for (let row = 0; row < tetrominoMatrixSize; row++) {
+//         for (let column = 0; column < tetrominoMatrixSize; column++) {
 //             const cellDiv = document.createElement('div');
-//             cellDiv.classList.add('.next_tetromino');
-//             cellDiv.style.backgroundColor = cell ? 'blue' : 'transparent';
-//             // Настройте цвета по вашему усмотрению
-//             rowDiv.appendChild(cellDiv);
-//         });
-
-//         container.appendChild(rowDiv);
-//     });
+//             // cellDiv.classList.add('next_tetromino>div');
+//             document.querySelector('.next_tetromino').appendChild(cellDiv);
+//             if (isOutsideTopBoard(row)) continue;
+//             if (nextTetromino.matrix[row][column]) {
+//                 cellDiv.classList.add(nextTetromino.name);
+//             }
+//             console.log(nextTetromino.name);
+//         }
+//     }
 // }
-// console.log(TETROMINOES);
+
 
 // generateNextTetromino();
+// drawNextTetromino();    
 
 
-
-
-
-// function toggleSound() {
-//     gameMusic.paused ? gameMusic.play() : gameMusic.pause();
-//         // soundIcon.src = './img/music-mute-sound-volume-speaker_red.svg';
-
-//         // soundIcon.src = '/img/music-unmute-sound-volume-speaker_green.svg';
-//     }
-
-// toggleButton.addEventListener('click', toggleSound);
-
-
-// function toggleMusic() {
-//     gameMusic.paused ? gameMusic.play() : gameMusic.pause();
-//     gameMusic.paused ? soundIcon.src = soundIcon.src = './img/music-mute-sound-volume-speaker_red.svg' :
-//     soundIcon.src = '/img/music-unmute-sound-volume-speaker_green.svg'
-// }
-
-// unmuteImage.src = './img/music-unmute-sound-volume-speaker_green.svg';
-
-// muteImage.src = './img/music-mute-sound-volume-speaker_red.svg';
-
-
+// Toggle music and sound
 
 btnToggleMusic.addEventListener('click', toggleMusic);
 const musicIcon = document.getElementById('music_icon');
 
 function toggleMusic() {
-    gameMusic.paused ? (gameMusic.play(), musicIcon.setAttribute('src', './img/music-mute-sound-volume-speaker_red.svg')) : (gameMusic.pause(), musicIcon.setAttribute('src', './img/music-unmute-sound-volume-speaker_green.svg'));
+    // gameMusic.paused ? (gameMusic.play(), musicIcon.setAttribute('src', './img/music_mute_red.svg')) : (gameMusic.pause(), musicIcon.setAttribute('src', './img/music_unmute_green.svg'));
+
+
+    gameMusic.paused ? (gameMusic.play(), musicIcon.src = './img/music_on.svg') : (gameMusic.pause(), musicIcon.src = './img/music_off.svg');
 }
 
-btnToggleMusic.addEventListener('click', toggleMusic);
-const soundIcon = document.getElementById('music_icon');
+btnToggleSound.addEventListener('click', toggleSounds);
+const soundIcon = document.getElementById('sound_icon');
 
-btnToggleSound.addEventListener('click', function () {
-    soundIsMuted ? unmuteAllSounds() : muteAllSounds();
-});
-
-function muteAllSounds() {
-    allSounds.forEach(sound => sound.volume = 0);
-    console.log("ffff");
-}
-
-function unmuteAllSounds() {
-    allSounds.forEach(sound => sound.volume = originalVolumes[sound]);
-    console.log("ffff");
+function toggleSounds() {
+    allSounds.forEach(sound => sound.muted = !sound.muted);
+    const isMuted = allSounds.some(sound => sound.muted);
+    soundIcon.src = !isMuted ? './img/sound_unmute.svg' : './img/sound_mute.svg';
+    console.log("bbbb");
 }

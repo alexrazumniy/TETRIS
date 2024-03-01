@@ -14,15 +14,23 @@
 
 <body>
     <div class="container">
+        <div class="start_screen">
+            <button class="btn_start">
+                <p class="start_message">TETRIS</p>
+                <p class="presstoplay_message">press to play</p>
+            </button>
+        </div>
+        <div class="overlay">
+            <button class="btn_play_again">
+                <p class="gameover_message">GAME OVER</p>
+                <p class="result_message"></p>
+                <p class="presstoplay_message">press to play again</p>
+            </button>
+        </div>
         <div class="tetris">
-            <div class="game_over">
-                GAME OVER
-                <div class="result_message">
-                </div>
-            </div>
         </div>
         <div class="info_panel">
-            <button class="restart_btn">Restart</button>
+            <button class="btn_restart_game">Restart</button>
             <p>Score</p>
             <div class="score_counter">
                 0
@@ -44,24 +52,17 @@
             <div class="next_tetromino_container" id="nextTetrominoContainer">
                 <p>Next</p>
                 <div class="next_tetromino">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    
                 </div>
             </div>
-
-            <button class="toggle_music_btn">
-                <img id="music_icon" src="./img/music-mute-sound-volume-speaker_red.svg" alt="music on/off" />
-            </button>
-
-            <button class="toggle_sounds_btn">
-                <img id="sound_icon" alt="sound on/off" />
-            </button>
+            <div class="sound_togglers">
+                <button class="toggle_music_btn">
+                    <img id="music_icon" src="./img/music_on.svg" alt="music on/off" />
+                </button>
+                <button class="toggle_sound_btn">
+                    <img id="sound_icon" src="./img/sound_unmute.svg" alt="sound on/off" />
+                </button>
+            </div>
 
             <div class="current_message">
             </div>
@@ -74,14 +75,9 @@
         <img class="arrow_drop" src="./img/arrow_drop.svg" />
         <img class="arrow_down" src="./img/arrow_down.svg" />
     </div>
-    <audio id="game_music" src="./sounds/elektrik_cokernut_popcorn.mp3" controls preload="auto">
+    <audio id="game_music" src="./sounds/elektrik_cokernut_popcorn.mp3" preload="auto">
         Your browser does not support the audio tag
     </audio>
-
-    <div class="overlay">
-        <button class="btn_restart">Restart</button>
-    </div>
-
     <script type="module" src="script.js"></script>
 </body>
 

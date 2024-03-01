@@ -26,7 +26,6 @@ p {
 }
 
 .tetris {
-    /* position: relative; */
     display: grid;
     grid-template-columns: repeat(10, auto);
     background-color: #41cbe0;
@@ -34,7 +33,7 @@ p {
     gap: 0.3vh;
 }
 
-.tetris > div {
+.tetris>div {
     height: min(3vh, 6vw);
     width: min(3vh, 6vw);
     background-color: rgba(75, 75, 75, 0.2);
@@ -72,18 +71,6 @@ p {
     background: rgb(57, 35, 255);
 }
 
-
-.tetris .ghost {
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow:
-        inset 2px 2px 2px rgba(128, 128, 128, 0.271),
-        inset -2px -2px 2px rgba(22, 87, 217, 0.271);
-}
-
-.ghost div {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 .info_panel {
     position: relative;
     display: flex;
@@ -93,6 +80,17 @@ p {
     padding-top: 30px;
     border-radius: 0.5vh;
     max-width: 15vw;
+}
+
+.btn_restart_game {
+    margin: 0 auto 20px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #67be3f;
+    font-family: inherit;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 .score_counter,
@@ -123,28 +121,16 @@ p {
     align-self: center;
     padding: 5px;
     border: 2px solid;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    /* width: 50px;
+    height: 50px; */
+    border-radius: 5px;
     background-color: #be3f3f;
     color: aqua;
     font-size: 8px;
-    /* font-family: inherit; */
+    font-family: inherit;
     text-transform: uppercase;
     cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.result_message {
-    position: absolute;
-    /* max-width: 130px; */
-    font-size: 0.8em;
-    line-height: 1.5;
-    text-align: center;
-    left: 10px;
-    bottom: 10px;
-    color: rgb(38, 68, 199);
-    /* padding-top: 50px; */
+    margin-bottom: 10px;
 }
 
 .current_message {
@@ -158,56 +144,160 @@ p {
     color: rgb(38, 68, 199);
 }
 
-/* /////////////// */ 
+.start_screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 156, 197, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.btn_start {
+    padding: 20px 30px 10px;
+    background: #59d640;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    box-shadow: 6px 8px 10px #290606;
+    cursor: pointer;
+}
+
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(204, 41, 41, 0.5);
+    background-color: rgba(80, 6, 6, 0.5);
     display: none;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
-.btn_restart {
-    width: 300px;
-    height: 200px;
+.btn_play_again {
+    padding: 20px 30px 10px;
     background: #d64040;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
-    font-size: 55px;
-    box-shadow: 0px 2px 10px #444;
-    cursor: pointer;
-}
-
-/* /////////////// */
-
-
-.game_over { /* overlay */
-    /* position: absolute; */
-    top: 0;
-    left: 0;
-    background-color: rgba(204, 41, 41, 0.5);
-    width: 100%;
-    height: 100%;
-    /* display: none; */
-    justify-content: center;
-    align-items: center;
-}
-
-.restart_btn {
-    margin: 0 auto 20px;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #67be3f;
     font-family: inherit;
-    font-size: 14px;
-    text-transform: uppercase;
+    box-shadow: 6px 8px 10px #290606;
     cursor: pointer;
 }
 
+.start_message,
+.gameover_message {
+    padding: 5px;
+    font-size: 2em;
+}
+
+.result_message {
+    padding: 10px;
+    border-radius: 3px;
+    background: rgba(211, 120, 35, 0.4);
+    font-size: 1em;
+    line-height: 1.5;
+    color: rgb(9, 17, 56);
+}
+
+.presstoplay_message {
+    padding-top: 10px;
+    font-size: 0.8em;
+}
+
+
+/* //// Next tetromino */
+
+.next_tetromino_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.next_tetromino {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    padding: 0.5vh;
+    border-radius: 0.5vh;
+    gap: 0.2vh;
+}
+
+.next_tetromino>div {
+    height: min(2vh, 4vw);
+    width: min(2vh, 4vw);
+    background-color: rgba(141, 32, 32, 0.205);
+    border-radius: 0.3vh;
+    box-shadow:
+        inset 2px 2px 2px rgba(128, 128, 128, 0.271),
+        inset -2px -2px 2px rgba(22, 87, 217, 0.271);
+}
+
+.next_tetromino .O {
+    background: rgb(105, 255, 74);
+}
+
+.next_tetromino .J {
+    background: rgb(162, 63, 255);
+}
+
+.next_tetromino .L {
+    background: rgb(255, 64, 144);
+}
+
+.next_tetromino .S {
+    background: rgb(255, 117, 53);
+}
+
+.next_tetromino .Z {
+    background: rgb(255, 194, 62);
+}
+
+.next_tetromino .T {
+    background: rgb(242, 255, 59);
+}
+
+.next_tetromino .I {
+    background: rgb(57, 35, 255);
+}
+
+/* Sound togglers */
+
+.sound_togglers {
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid #1e39cf;
+    margin: 0 auto;
+}
+
+.toggle_music_btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#music_icon {
+    width: 32px;
+}
+
+.toggle_sound_btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#sound_icon {
+    width: 32px;
+}
+
+/* Arrows */
 .arrows {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -287,36 +377,17 @@ p {
     cursor: pointer;
 }
 
-.next_tetromino_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-}
 
-.next_tetromino {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    padding: 0.5vh;
-    border-radius: 0.5vh;
-    gap: 0.2vh;
-}
 
-.next_tetromino div {
-    height: min(3vh, 6vw);
-    width: min(3vh, 6vw);
-    background-color: rgba(97, 75, 75, 0.205);
-    border-radius: 0.3vh;
+/* Ghost tetro */
+
+/* .tetris .ghost {
+    background-color: rgba(255, 255, 255, 0.2);
     box-shadow:
         inset 2px 2px 2px rgba(128, 128, 128, 0.271),
         inset -2px -2px 2px rgba(22, 87, 217, 0.271);
 }
 
-.toggle_music_btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-#music_icon {
-    width: 32px;
-}
+.ghost div {
+    background-color: rgba(255, 255, 255, 0.5);
+} */
